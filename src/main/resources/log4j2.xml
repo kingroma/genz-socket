@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<Configuration> 
+	<Properties>
+		<Property name="fileLogPath">/genz/genz-client-api/logs</Property>
+		<Property name="fileLogName">genz</Property>
+		<Property name="fileLogPattern">
+			%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5.5p | %l - %m%n
+		</Property>
+	</Properties>	
+	
+	<!-- Appender, Layout --> 
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${fileLogPattern}"/> 
+        </Console>
+		<RollingFile name="fileLog"
+					 fileName="${fileLogPath}/${fileLogName}.log"
+					 filePattern="${fileLogPath}/$${date:yyyyMM}/${fileLogName}_%d{yyyy-MM-dd}_%i.log" >
+			<PatternLayout pattern="${fileLogPattern}"/> 
+			<Policies>
+				<TimeBasedTriggeringPolicy />				 
+				<SizeBasedTriggeringPolicy size="10MB" />
+			</Policies>
+		</RollingFile>
+		
+    </Appenders>
+
+    <!-- Logger --> 
+    <Loggers> 	    
+        <Root level="info">
+        	<AppenderRef ref="console" />
+            <AppenderRef ref="fileLog" />
+        </Root>
+    </Loggers>
+</Configuration>
+
